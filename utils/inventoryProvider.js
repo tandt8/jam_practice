@@ -19,7 +19,12 @@ type Product {
 
 async function fetchInventory() {
 
- const reponse = await axios.get('http://192.168.0.103:100/api/WeatherForecast/products');
+ const reponse = await axios.get('http://192.168.0.103:100/api/WeatherForecast/products',{
+   headers:{
+    'Content-Type': 'application/json'
+  }
+
+ });
  
   
   return Promise.resolve(reponse.data)
