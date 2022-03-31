@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { fetchInventory } from '../utils/inventoryProvider'
 import DENOMINATION from '../utils/currencyProvider'
 import Image from '../components/Image'
 import Link from 'next/link'
@@ -16,25 +16,21 @@ class ViewInventory extends React.Component {
     this.fetchInventory()
   }
   fetchInventory = async() => {
-    const data = window.localStorage.getItem('inventory');
-    const inventory = JSON.parse(data);
+    const inventory = await fetchInventory()
     this.setState({ inventory })
   }
   editItem = (item, index) => {
     const editingIndex = index
-    this.setState({ editingIndex, currentItem: item }) 
-    
+    this.setState({ editingIndex, currentItem: item })    
   }
   saveItem = async index => {
     const inventory = [...this.state.inventory]
     inventory[index] = this.state.currentItem
     // update item in database
-    window.localStorage.setItem('inventory',JSON.stringify(inventory));
     this.setState({ editingIndex: null, inventory })
   }
   deleteItem = async index => {
     const inventory = [...this.state.inventory.slice(0, index), ...this.state.inventory.slice(index + 1)]
-    window.localStorage.setItem('inventory',JSON.stringify(inventory));
     this.setState({ inventory })
   }
   onChange = event => {
@@ -47,7 +43,6 @@ class ViewInventory extends React.Component {
   }
   render() {
     const { inventory, currentItem, editingIndex } = this.state
-    console.log(inventory);
     return (
       <div>
         <h2 className="text-3xl">Inventory</h2>

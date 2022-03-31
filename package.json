@@ -11,6 +11,7 @@
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.11.0",
     "autoprefixer": "^10.1.0",
+    "axios": "^0.26.1",
     "flowbite": "^1.4.1",
     "formidable": "^2.0.1",
     "mv": "^2.1.1",

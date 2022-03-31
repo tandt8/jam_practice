@@ -3,50 +3,8 @@ import { titleIfy , slugify } from '../utils/helpers'
 import { DisplayMedium } from '../components'
 import CartLink from '../components/CartLink'
 import { fetchInventory } from '../utils/inventoryProvider'
-import {useState,useEffect} from 'react'
 
-function Categories () {
-  let inventory = []
-  let categoriesRender =[]
-  const[dataInventory, setDataInventory] = useState([]);
-  const[categories, setCategories] = useState([]);
-  useEffect(()=>{
-    if(typeof(window) !== 'undefined'){
-      const data = window.localStorage.getItem('inventory');
-
-      if(typeof(data) === 'undefined'){
-       
-        
-      }
-      else{
-        const newData =  JSON.parse(data);
-        setDataInventory([...newData]);
-        inventory = dataInventory.slice(0, 4)
-       const  newCategories = dataInventory.reduce((acc, next) => {
-          const categories = next.categories
-          categories.forEach(c => {
-            const index = acc.findIndex(item => item.name === c)
-            if (index !== -1) {
-              const item = acc[index]
-              item.itemCount = item.itemCount + 1
-              acc[index] = item
-            } else {
-              const item = {
-                name: c,
-                image: next.image,
-                itemCount: 1
-              }
-              acc.push(item)
-            }
-          })
-          return acc
-        }, []);
-        categoriesRender = newCategories.slice(0, 2);
-        setCategories([...categoriesRender]);
-      }
-    
-    }
-  })
+function Categories ({ categories = [] }) {
   return (
     <>
       <div className="w-full">

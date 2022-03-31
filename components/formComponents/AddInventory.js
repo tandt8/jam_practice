@@ -1,6 +1,7 @@
 import React from 'react'
 import { toast } from 'react-toastify'
 import { BehaviorSubject, debounceTime } from 'rxjs'
+import axios from 'axios'
 const initialState = {
   name: '', brand: '', price: '', categories: [], image: '', description: '', currentInventory: ''
 }
@@ -50,9 +51,14 @@ class AddInventory extends React.Component {
 
             const newString = `${newFileName[0]}.${newFormat}`;
 
-    const dataPush = {categories:categoriesData,name:name,price:price,image:`/products/${newString}`,description:description,brand:brand,currentInventory:currentInventory};
-    inventory.push(dataPush);
-    window.localStorage.setItem('inventory',JSON.stringify(inventory));
+    const dataPush = {categories:categoriesData.join(","),name:name,price:parseInt(price),image:`/products/${newString}`,description:description,brand:brand,currentInventory:parseInt(currentInventory)};
+    console.log(JSON.stringify(dataPush));
+    const checkInsert =await axios.post('http://192.168.0.103:100/api/WeatherForecast/insertData',JSON.stringify(dataPush),{
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    });
+    if(checkInsert.status === 200 && checkInsert.data === 1)
     toast("Successfully added item to the inventory!", {
       position: toast.POSITION.TOP_LEFT
     })

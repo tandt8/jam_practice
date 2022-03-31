@@ -2,53 +2,17 @@ import Head from 'next/head'
 import { Center, Footer, Tag, Showcase, DisplaySmall, DisplayMedium } from '../components'
 import { titleIfy, slugify } from '../utils/helpers'
 import { fetchInventory } from '../utils/inventoryProvider'
-import { useEffect,useState } from 'react'
+
 import CartLink from '../components/CartLink'
-import { InventoryContext } from '../context/inventoryContext'
+
 
 
 const Home = ({ inventoryData = [], categories: categoryData = [] }) => {
   
-  const[dataInventory, setDataInventory] = useState([...inventoryData.slice(0, 4)]);
-  const[categoriesNew, setCategories] = useState([...categoryData.slice(0, 2)]);
+  const dataInventory = inventoryData.slice(0, 4);
+  const categoriesNew = categoryData.slice(0, 2);
   
-  useEffect(()=>{
-    if(typeof(window) !== 'undefined'){
-      const data = window.localStorage.getItem('inventory');
-
-      if(typeof(data) === 'undefined'){
-        window.localStorage.setItem('inventory',JSON.stringify(inventoryData));
-        setDataInventory([...inventoryData.slice(0, 4)]);
-        setCategories([...categoryData.slice(0, 2)]);
-      }
-      else{
-        const newData =  JSON.parse(data);
-        setDataInventory([...newData]);
-       const  newCategories = dataInventory.reduce((acc, next) => {
-          const categories = next.categories
-          categories.forEach(c => {
-            const index = acc.findIndex(item => item.name === c)
-            if (index !== -1) {
-              const item = acc[index]
-              item.itemCount = item.itemCount + 1
-              acc[index] = item
-            } else {
-              const item = {
-                name: c,
-                image: next.image,
-                itemCount: 1
-              }
-              acc.push(item)
-            }
-          })
-          return acc
-        }, []);
-        setCategories([...newCategories.slice(0, 2)]);
-        
-      }
-    
-    }
-  })
+  
    
 
   return (
@@ -143,6 +107,15 @@ const Home = ({ inventoryData = [], categories: categoryData = [] }) => {
 }
 
 export async function getStaticProps() {
+  
+  
+
+  
+
+ 
+
+
+
   const inventory = await fetchInventory()
   
   const inventoryCategorized = inventory.reduce((acc, next) => {

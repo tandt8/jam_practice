@@ -1,4 +1,6 @@
+import axios from 'axios'
 import inventory from './inventory'
+
 
 /*
 Inventory items should adhere to the following schema:
@@ -17,11 +19,10 @@ type Product {
 
 async function fetchInventory() {
 
-
+ const reponse = await axios.get('http://192.168.0.103:100/api/WeatherForecast/products');
  
-
   
-  return Promise.resolve(inventory)
+  return Promise.resolve(reponse.data)
 }
 
 export {
