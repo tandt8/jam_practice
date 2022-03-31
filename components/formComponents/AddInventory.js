@@ -53,7 +53,7 @@ class AddInventory extends React.Component {
 
     const dataPush = {categories:categoriesData.join(","),name:name,price:parseInt(price),image:`/products/${newString}`,description:description,brand:brand,currentInventory:parseInt(currentInventory)};
     console.log(JSON.stringify(dataPush));
-    const checkInsert =await axios.post('http://192.168.0.103:100/api/WeatherForecast/insertData',JSON.stringify(dataPush),{
+    const checkInsert =await axios.post('http://3b84-112-197-242-11.jp.ngrok.io/api/WeatherForecast/insertData',JSON.stringify(dataPush),{
       headers:{
         'Content-Type': 'application/json'
       }

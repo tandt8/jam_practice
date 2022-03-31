@@ -19,7 +19,7 @@ type Product {
 
 async function fetchInventory() {
 
- const reponse = await axios.get('http://192.168.0.103:100/api/WeatherForecast/products',{
+ const reponse = await axios.get('http://3b84-112-197-242-11.jp.ngrok.io/api/WeatherForecast/products',{
    headers:{
     'Content-Type': 'application/json'
   }
